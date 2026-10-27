@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">Daymark planner mark</title>
+  <defs>
+    <linearGradient id="lavender" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#aa8bd5"/>
+      <stop offset="1" stop-color="#70549f"/>
+    </linearGradient>
+    <linearGradient id="sunrise" x1="0" x2="1">
+      <stop offset="0" stop-color="#f8c995"/>
+      <stop offset="1" stop-color="#f5a9bd"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="26" fill="url(#lavender)"/>
+  <path d="M27 21h42a7 7 0 0 1 7 7v43a7 7 0 0 1-7 7H27a7 7 0 0 1-7-7V28a7 7 0 0 1 7-7Z" fill="#fff" opacity=".96"/>
+  <path d="M34 17v11M62 17v11" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="6"/>
+  <path d="M32 44h32" fill="none" stroke="#ded5ef" stroke-linecap="round" stroke-width="4"/>
+  <path d="M36 60a12 12 0 0 1 24 0" fill="none" stroke="url(#sunrise)" stroke-linecap="round" stroke-width="6"/>
+  <path d="M31 68h34" fill="none" stroke="#bca9dc" stroke-linecap="round" stroke-width="4"/>
+  <path d="m41 57 5 5 10-12" fill="none" stroke="#70549f" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+</svg>

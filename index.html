@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#68588e">
+    <meta name="description" content="A calm, private planner for faith, study, and everyday life.">
+    <title>Daymark | Faith, Study &amp; Life Planner</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <div id="reminderToast" class="reminder-toast" role="status" aria-live="assertive" aria-atomic="true">
+        <span class="toast-mark" aria-hidden="true">!</span>
+        <span id="reminderMessage"></span>
+        <button id="dismissReminder" type="button" aria-label="Dismiss reminder">×</button>
+    </div>
+    <header class="topbar">
+        <a class="brand" href="#main" aria-label="Daymark home">
+            <img class="brand-mark" src="logo.svg" alt="" width="38" height="38">
+            <span>daymark</span>
+        </a>
+        <div class="topbar-actions">
+            <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false">◐ Theme</button>
+            <button id="notificationButton" class="notification-button" type="button" aria-describedby="reminderHelp">Enable alerts</button>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="welcome" aria-labelledby="welcomeTitle">
+            <div class="welcome-copy">
+                <p class="eyebrow">YOUR SPACE TO FOCUS</p>
+                <h1 id="welcomeTitle">Make room for<br><span>what matters.</span></h1>
+                <p class="welcome-note">A little structure for a day well spent.</p>
+            </div>
+            <div class="date-picker">
+                <label for="planDate">PLANNING FOR</label>
+                <input type="date" id="planDate">
+            </div>
+        </section>
+
+        <section class="summary">
+                <div class="stat" aria-label="Daily task summary">
+                <span class="stat-label">ON YOUR LIST</span>
+                <p id="totalCount">0</p>
+            </div>
+            <div class="stat">
+                <span class="stat-label">DONE SO FAR</span>
+                <p id="completedCount">0</p>
+            </div>
+                <div class="stat">
+                    <span class="stat-label">STILL TO DO</span>
+                    <p id="pendingCount">0</p>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">OVERDUE</span>
+                    <p id="overdueCount">0</p>
+                </div>
+            <div class="stat progress-stat">
+                <div class="stat-heading">
+                    <span class="stat-label">DAILY PROGRESS</span>
+                    <p id="progressPercent">0%</p>
+                </div>
+                <div class="progress-track" role="progressbar" aria-label="Daily task progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div id="progressBar"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="planner" aria-labelledby="taskHeading">
+            <div class="planner-heading">
+                <div>
+                    <p class="eyebrow">THE PLAN</p>
+                    <h2 id="taskHeading">Your tasks</h2>
+                </div>
+                <span id="notificationStatus" class="notification-status" aria-live="polite">In-page reminders are on</span>
+            </div>
+            <div class="reminder-tools" aria-label="Reminder settings">
+                <label class="sound-setting" for="soundToggle">
+                    <input id="soundToggle" type="checkbox" checked>
+                    <span>Play reminder sound</span>
+                </label>
+                <button id="testReminderSound" class="test-sound-button" type="button">Test sound</button>
+                <label class="repeat-setting" for="overdueRepeat">
+                    <span>Repeat overdue reminder</span>
+                    <select id="overdueRepeat">
+                        <option value="0">Once only</option>
+                        <option value="30">Every 30 minutes</option>
+                        <option value="60" selected>Every hour</option>
+                        <option value="120">Every 2 hours</option>
+                    </select>
+                </label>
+            </div>
+            <p id="reminderHelp" class="reminder-help">A gentle heads-up plays 15 minutes before a task is due, with another alert at the due time. Unfinished tasks can repeat at your chosen interval while this planner is open. Tasks without a due time use 9:00 PM. Allow browser notifications for screen alerts; delivery when this app is closed is not guaranteed on every device.</p>
+
+            <form id="taskForm">
+                <div class="form-field task-name-field">
+                    <label for="taskTitle">TASK</label>
+                    <input type="text" id="taskTitle" placeholder="What needs doing?" maxlength="100" required>
+                </div>
+                <div class="form-field">
+                    <label for="taskCategory">CATEGORY</label>
+                    <select id="taskCategory">
+                            <option value="Prayer & Bible Reading">Prayer & Bible Reading</option>
+                        <option value="PGCET">PGCET Preparation</option>
+                            <option value="College">College</option>
+                            <option value="Assignments">Assignments</option>
+                        <option value="Writing">Writing Work</option>
+                            <option value="Rest & Wellness">Rest & Wellness</option>
+                        <option value="Other">Other</option>
+                            <option value="Custom">Custom category…</option>
+                    </select>
+                </div>
+                    <div id="customCategoryField" class="form-field" hidden>
+                        <label for="customCategory">CUSTOM CATEGORY</label>
+                        <input type="text" id="customCategory" maxlength="40" placeholder="e.g. Family">
+                    </div>
+                    <div class="form-field">
+                        <label for="taskStartTime">START TIME</label>
+                        <input type="time" id="taskStartTime">
+                    </div>
+                <div class="form-field time-field">
+                        <label for="taskDeadline">DUE TIME <span>15-minute heads-up</span></label>
+                        <input type="time" id="taskDeadline">
+                    </div>
+                    <div class="form-field">
+                        <label for="taskPriority">PRIORITY</label>
+                        <select id="taskPriority">
+                            <option value="normal">Normal</option>
+                            <option value="high">High</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="taskRepeat">REPEAT</label>
+                        <select id="taskRepeat">
+                            <option value="none">Does not repeat</option>
+                            <option value="daily">Every day</option>
+                            <option value="weekly">Every week</option>
+                            <option value="custom">Every few days…</option>
+                        </select>
+                    </div>
+                    <div id="repeatIntervalField" class="form-field" hidden>
+                        <label for="repeatEveryDays">REPEAT EVERY (DAYS)</label>
+                        <input type="number" id="repeatEveryDays" min="1" max="365" value="2">
+                    </div>
+                    <div class="form-field task-notes-field">
+                        <label for="taskNotes">NOTES</label>
+                        <input type="text" id="taskNotes" maxlength="240" placeholder="Anything else to remember? (optional)">
+                </div>
+                    <div class="form-actions">
+                        <button id="submitTaskButton" class="add-button" type="submit"><span aria-hidden="true">+</span> Add task</button>
+                        <button id="cancelEditButton" class="cancel-button" type="button" hidden>Cancel edit</button>
+                    </div>
+            </form>
+                <p id="taskFeedback" class="task-feedback" role="status" aria-live="polite" hidden></p>
+
+                <div class="task-controls">
+                    <label class="search-field" for="taskSearch">
+                        <span class="sr-only">Search tasks</span>
+                        <span aria-hidden="true">⌕</span>
+                        <input type="search" id="taskSearch" placeholder="Search tasks">
+                    </label>
+                    <label class="filter-field" for="taskStatusFilter">
+                        <span class="sr-only">Filter by status</span>
+                        <select id="taskStatusFilter">
+                            <option value="pending" selected>Pending</option>
+                            <option value="completed">Completed</option>
+                            <option value="overdue">Overdue</option>
+                            <option value="all">All tasks</option>
+                        </select>
+                    </label>
+                    <label class="filter-field" for="taskCategoryFilter">
+                        <span class="sr-only">Filter by category</span>
+                        <select id="taskCategoryFilter">
+                            <option value="all">All categories</option>
+                        </select>
+                    </label>
+                    <label class="filter-field" for="taskSort">
+                        <span class="sr-only">Sort tasks</span>
+                        <select id="taskSort">
+                            <option value="schedule">Sort: Schedule</option>
+                            <option value="priority">Sort: Priority</option>
+                            <option value="title">Sort: Title</option>
+                        </select>
+                    </label>
+                </div>
+            <ul id="taskList" aria-live="polite"></ul>
+        </section>
+    </main>
+
+        <div id="undoToast" class="undo-toast" role="status" aria-live="polite">
+            <span id="undoMessage">Task deleted.</span>
+            <button id="undoDeleteButton" type="button">Undo</button>
+        </div>
+
+    <footer>
+        <p>One thing at a time. You’re right where you need to be.</p>
+    </footer>
+</body>
+</html>
